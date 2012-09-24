@@ -14,9 +14,10 @@ for kml in os.listdir(RAW_DIR):
                 'type': 'Feature',
                 'geometry': {
                     'type': 'Point',
-                    'coordinates': [lng,lat]
+                    'coordinates': [float(lng),float(lat)]
                 },
-                'properties': {}
+                'properties': {}    # add properties from the KML file
+                                    # relevant to viz: population, id
             }
             geojson['features'].append(feature)
 print json.dumps(geojson)

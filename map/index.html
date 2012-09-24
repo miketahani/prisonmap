@@ -2,14 +2,14 @@
 <html>
     <head>
         <title>Prisonmaps</title>
-        <script src="assets/js/polymaps.min.js"></script>
+        <script src="assets/js/polymaps.js"></script>
     </head>
     <style>
         path {
             stroke: #fff;
         }
-        #map {
-            border: 1px solid #000;
+        circle {
+            opacity: 0.5;
         }
     </style>
 
@@ -23,15 +23,21 @@
 
             var map = po.map()
                 .container(document.getElementById("map").appendChild(po.svg("svg")))
-                //.center({lat: 48.35, lon: -124.69})
+                .zoom(5)
                 .add(po.hash())
                 .add(po.interact())
                 .add(po.compass());
 
-            map.add(po.geoJson().url("assets/data/clean_prisons.json"));
-            // map.add(po.geoJson()
-            //     .url("assets/data/clean_prisons.json"));
-            //     //.on("load", load));
+            map.add(po.geoJson().url("assets/data/clean_prisons.json").on("load", load));
+
+            // just make life easier and do styling with D3
+            function load(e) {
+                for (var i=0; i < e.features.length; i++) {
+                    feature = e.features[i];
+                    feature.element.setAttribute("r", 10);
+                }
+            }
+
 
         </script>
     </body>
