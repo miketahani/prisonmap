@@ -3,13 +3,14 @@
     <head>
         <title>Prisonmaps</title>
         <script src="assets/js/polymaps.js"></script>
+        <script src="assets/js/d3.v2.min.js"></script>
     </head>
     <style>
         path {
             stroke: #fff;
         }
         circle {
-            opacity: 0.5;
+            //opacity: 0.5;
         }
     </style>
 
@@ -29,15 +30,16 @@
                 .add(po.compass());
 
             map.add(po.geoJson().url("assets/data/clean_prisons.json").on("load", load));
-
+            
             // just make life easier and do styling with D3
-            function load(e) {
-                for (var i=0; i < e.features.length; i++) {
-                    feature = e.features[i];
-                    feature.element.setAttribute("r", 10);
+            function load(json) {
+                var population_max = d3.max(json.features, function(d) { return d.data.properties.correctional_pop });
+                var radius = d3.scale.sqrt().domain([0, population_max]).range([3, 20]);
+                for (var i=0; i < json.features.length; i++) {
+                    feature = json.features[i];
+                    feature.element.setAttribute("r", radius(feature.data.properties.correctional_pop));
                 }
             }
-
 
         </script>
     </body>
