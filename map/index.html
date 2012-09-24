@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Prisonmaps</title>
+        <script src="assets/js/polymaps.min.js"></script>
+    </head>
+    <style>
+        path {
+            stroke: #fff;
+        }
+        #map {
+            border: 1px solid #000;
+        }
+    </style>
+
+    <body>
+
+        <div id="map"></div>
+
+        <script>
+
+            var po = org.polymaps;
+
+            var map = po.map()
+                .container(document.getElementById("map").appendChild(po.svg("svg")))
+                //.center({lat: 48.35, lon: -124.69})
+                .add(po.hash())
+                .add(po.interact())
+                .add(po.compass());
+
+            map.add(po.geoJson().url("assets/data/clean_prisons.json"));
+            // map.add(po.geoJson()
+            //     .url("assets/data/clean_prisons.json"));
+            //     //.on("load", load));
+
+        </script>
+    </body>
+</html>
