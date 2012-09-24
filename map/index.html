@@ -6,7 +6,7 @@
         <script src="assets/js/d3.v2.min.js"></script>
     </head>
     <style>
-        path {
+        .compass path {
             stroke: #fff;
         }
         circle {
@@ -29,7 +29,10 @@
                 .add(po.interact())
                 .add(po.compass());
 
-            map.add(po.geoJson().url("assets/data/clean_prisons.json").on("load", load));
+            map.add(po.geoJson()
+                .url("assets/data/clean_prisons.json")
+                .on("load", load)
+            );
             
             // just make life easier and do styling with D3
             function load(json) {
